@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      rel="icon"
+      href="resources/favicon.ico"
+      type="image/x-icon"
+      sizes="96x96"
+    />
+
+    <title>Flip the coin | devChallenges.io</title>
+
+    <!--You are welcome to delete these styles or modify them in your own stylesheet -->
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        height: 100vh;
+        background-color: #382f41;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-family: 'poppins', sans-serif;
+      }
+
+      h1{
+        color: #fff;
+        text-transform: capitalize;
+      }
+
+      h3{
+        color: #fff;
+        font-family: 'poppins', sans-serif;
+      }
+
+      .coin-container{
+        width: 200px;
+        height: 200px;
+        perspective: 1000px;
+        margin: 20px;
+      }
+
+      .coin{
+        width: 100%;
+        height: 100%;
+        position: relative;
+        transform-style: preserve-3d;
+        transition:  transform 0.3s;
+      }
+
+
+      .coin img{
+        width: 100%;
+        height: 100%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        border-radius: 50%;
+        position: absolute;
+        backface-visibility: hidden;
+      }
+
+      .coin .back{
+        transform: rotateY(180deg);
+      }
+
+      button{
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-size: 20px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        border: none;
+        background-color: #1111ff;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+
+      button:hover{
+        background-color: #0000e9;
+      }
+
+      .author-info {
+        font-size: 14px;
+        text-align: center;
+        margin-top: 16px;
+        color: rgb(55, 65, 81);
+      }
+
+      .author-info a {
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!--  Flip a Coin Game-->
+
+    <h1>Flip the Coin Game</h1>
+    <h3>Press the coin or the button to flip the coin</h3>
+
+    <div class="coin-container">
+
+      <div class="coin" id="coin">
+        <img src="resources/heads.svg" alt="pile" class="front">
+        <img src="resources/tails.svg" alt="face" class="back">
+      </div>
+      <h3>Head</h3>
+      <h3>Tail</h3>
+      <img src="resources/shadow.svg" alt="" class="ombre">
+      <button id="flip-coin">Random</button>
+
+      <p id="resultat">Resultat</p>
+    </div>
+    
+
+    <div class="author-info">
+      Coded by <a href="index.html">diomed</a> | Challenge by
+      <a href="https://www.devchallenges.io?ref=challenge" target="_blank"
+        >devChallenges.io</a
+      >.
+    </div>
+
+    <script>
+      const coin = document.getElementById('coin')
+      const button = document.getElementById('flip-coin')
+      const resultat = document.getElementById('resultat')
+
+      button.addEventListener('click', () => {
+        const isHeads = Math.random () < 0.5
+        coin.style.transition = 'transform 3s'
+        coin.style.transform = `rotateY(${isHeads? 0 : 180}deg)`
+
+        resultat.textContent = isHeads ?  "C’est Pile ! 🎉" : "C’est Face ! 🎯"
+      })
+    </script>
+  </body>
+</html>
