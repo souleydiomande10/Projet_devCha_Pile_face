@@ -23,70 +23,68 @@
 
       body {
         height: 100vh;
-        background-color: #382f41;
         display: flex;
         flex-direction: column;
-        align-items: center;
         justify-content: center;
-        font-family: 'poppins', sans-serif;
+        align-items: center;
+        font-family: Arial, sans-serif;
+        background-color: #9b9797;
       }
 
-      h1{
-        color: #fff;
-        text-transform: capitalize;
-      }
-
-      h3{
-        color: #fff;
-        font-family: 'poppins', sans-serif;
-      }
-
-      .coin-container{
-        width: 200px;
-        height: 200px;
-        perspective: 1000px;
-        margin: 20px;
-      }
-
-      .coin{
-        width: 100%;
-        height: 100%;
-        position: relative;
-        transform-style: preserve-3d;
-        transition:  transform 0.3s;
-      }
-
-
-      .coin img{
-        width: 100%;
-        height: 100%;
-        margin-top: 10px;
+      h1, h3 {
+        text-align: center;
         margin-bottom: 10px;
-        border-radius: 50%;
+      }
+
+      .coin-container {
+        position: relative;
+        text-align: center;
+      }
+
+      .coin {
+        position: relative;
+        width: 150px;
+        height: 150px;
+        margin: 20px auto;
+        transition: transform 1s;
+        transform-style: preserve-3d;
+      }
+
+      .coin img {
+        width: 100%;
+        height: auto;
         position: absolute;
+        top: 0;
+        left: 0;
         backface-visibility: hidden;
       }
 
-      .coin .back{
+      .back {
         transform: rotateY(180deg);
       }
 
-      button{
+      .ombre {
+        display: block;
+        margin: 10px auto;
+        width: 100px;
+      }
+
+      button {
+        margin-top: 20px;
         padding: 10px 20px;
-        border-radius: 8px;
-        font-size: 20px;
-        margin-top: 10px;
-        margin-bottom: 10px;
-        border: none;
-        background-color: #1111ff;
+        font-size: 16px;
         cursor: pointer;
-        transition: background 0.3s;
+        background-color: #2d89ef;
+        color: white;
+        border: none;
+        border-radius: 5px;
       }
 
-      button:hover{
-        background-color: #0000e9;
+      #resultat {
+        margin-top: 15px;
+        font-size: 18px;
+        font-weight: bold;
       }
-
       .author-info {
         font-size: 14px;
         text-align: center;
@@ -111,13 +109,44 @@
         <img src="resources/heads.svg" alt="pile" class="front">
         <img src="resources/tails.svg" alt="face" class="back">
       </div>
-      <h3>Head</h3>
-      <h3>Tail</h3>
       <img src="resources/shadow.svg" alt="" class="ombre">
       <button id="flip-coin">Random</button>
 
       <p id="resultat">Resultat</p>
     </div>
+    
+
+    <script>
+      const coin = document.getElementById("coin");
+      const result = document.getElementById("resultat");
+      const button = document.getElementById("flip-coin");
+    
+      let flipping = false; // pour éviter les doubles clics
+    
+      function flipCoin() {
+        if (flipping) return;
+    
+        flipping = true;
+    
+        const isHeads = Math.random() < 0.5;
+        const extraRotations = 6; // nombre de tours complets
+        const finalAngle = isHeads ? 0 : 180;
+    
+        // on applique la rotation totale (multiples tours + face finale)
+        const rotation = 360 * extraRotations + finalAngle;
+    
+        coin.style.transition = "transform 3s ease-in-out";
+        coin.style.transform = `rotateY(${rotation}deg)`;
+    
+        setTimeout(() => {
+          result.textContent = isHeads ? "Head 🎉" : "Tails 🎯";
+          flipping = false;
+        }, 3000); // attendre la fin de l'animation
+      }
+    
+      button.addEventListener("click", flipCoin);
+      coin.addEventListener("click", flipCoin);
+    </script>
     
 
     <div class="author-info">
@@ -127,18 +156,5 @@
       >.
     </div>
 
-    <script>
-      const coin = document.getElementById('coin')
-      const button = document.getElementById('flip-coin')
-      const resultat = document.getElementById('resultat')
-
-      button.addEventListener('click', () => {
-        const isHeads = Math.random () < 0.5
-        coin.style.transition = 'transform 3s'
-        coin.style.transform = `rotateY(${isHeads? 0 : 180}deg)`
-
-        resultat.textContent = isHeads ?  "C’est Pile ! 🎉" : "C’est Face ! 🎯"
-      })
-    </script>
   </body>
 </html>
